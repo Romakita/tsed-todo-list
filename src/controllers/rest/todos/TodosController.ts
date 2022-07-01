@@ -1,12 +1,16 @@
 import {Controller, Inject} from "@tsed/di";
-import {Delete, Description, Get, Groups, Post, Put, Required, Returns, Summary} from "@tsed/schema";
+import {Delete, Description, Get, Groups, Name, Post, Put, Required, Returns, Security, Summary} from "@tsed/schema";
 import {BodyParams, PathParams} from "@tsed/platform-params";
 import {ObjectID} from "@tsed/mongoose";
 import {NotFound} from "@tsed/exceptions";
+import {Authorize} from "@tsed/passport";
 import {TodoModel} from "../../../models/todos/TodoModel";
 import {TodosService} from "../../../services/todos/TodosService";
 
 @Controller("/todos")
+@Authorize("jwt")
+@Security("jwt")
+@Name("Todos")
 export class TodosController {
   @Inject()
   protected todosService: TodosService;
@@ -54,7 +58,7 @@ export class TodosController {
   async remove(@Required() @PathParams("id") id: string) {
     await this.get(id);
 
-    return this.todosService.removeById(id)
+    return this.todosService.removeById(id);
   }
 
   @Get("/")

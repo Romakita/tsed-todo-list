@@ -13,7 +13,16 @@ export const config: Partial<TsED.Configuration> = {
   mongoose: mongooseConfig,
   passport: {
     disableSession: true,
-    userInfoModel: UserModel
+    userInfoModel: UserModel,
+    protocols: {
+      jwt: {
+        settings: {
+          secretOrKey: "myhugesecret",
+          issuer: "accounts.tsed.com",
+          audience: "tsed.com"
+        }
+      }
+    }
   }
   // additional shared configuration
 };

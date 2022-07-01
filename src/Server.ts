@@ -14,7 +14,7 @@ import "@tsed/passport";
 import {config} from "./config";
 import * as rest from "./controllers/rest";
 import * as pages from "./controllers/pages";
-
+import "./protocols/index";
 
 @Configuration({
   ...config,
@@ -33,7 +33,17 @@ import * as pages from "./controllers/pages";
   swagger: [
     {
       path: "/doc",
-      specVersion: "3.0.1"
+      specVersion: "3.0.1",
+      spec: {
+        components: {
+          securitySchemes: {
+            jwt: {
+              type: "http",
+              scheme: "bearer"
+            }
+          }
+        }
+      }
     }
   ],
   middlewares: [
@@ -44,7 +54,8 @@ import * as pages from "./controllers/pages";
     bodyParser.json(),
     bodyParser.urlencoded({
       extended: true
-    })  ],
+    })
+  ],
   views: {
     root: join(process.cwd(), "../views"),
     extensions: {

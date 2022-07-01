@@ -1,12 +1,16 @@
 import {Controller, Inject} from "@tsed/di";
-import {Delete, Description, Get, Groups, Post, Put, Required, Returns, Summary} from "@tsed/schema";
+import {Delete, Description, Get, Groups, Name, Post, Put, Required, Returns, Security, Summary} from "@tsed/schema";
 import {UserModel} from "../../../models/users/UserModel";
 import {BodyParams, PathParams} from "@tsed/platform-params";
 import {ObjectID} from "@tsed/mongoose";
 import {NotFound} from "@tsed/exceptions";
+import {Authorize} from "@tsed/passport";
 import {UsersService} from "../../../services/users/UsersService";
 
 @Controller("/users")
+@Authorize("jwt")
+@Security("jwt")
+@Name("Security")
 export class UsersController {
   @Inject()
   protected usersService: UsersService;

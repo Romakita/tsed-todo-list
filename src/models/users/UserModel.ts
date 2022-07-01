@@ -1,7 +1,7 @@
 import {Model, ObjectID, Trim, Unique} from "@tsed/mongoose";
 import {DateFormat, Email, Example, Groups, MaxLength, MinLength, Required} from "@tsed/schema";
 
-class Credentials {
+export class Credentials {
   @Email()
   @Required()
   @Unique()
@@ -53,4 +53,9 @@ export class UserModel extends Credentials {
   @DateFormat()
   @Required()
   birthdate: Date;
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  verifyPassword(password: string): boolean {
+    return this.password === password;
+  }
 }
